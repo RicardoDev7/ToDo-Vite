@@ -1,16 +1,19 @@
 export const createTodoHtml = (todo) => {
     if(!todo) throw new Error('A todo is required');
+
+    const {done, description, id} = todo;
+
     const html = `
         <div class="view">
-            <input class="toggle" type="checkbox" ${todo.done ? 'checked' : ''} />
-            <label>${todo.description}</label>
+            <input class="toggle" type="checkbox" ${done ? 'checked' : ''} />
+            <label>${description}</label>
             <button class="destroy"></button>
         </div>
         <input class="edit" value="Create a TodoMVC template">
     `;
     const liElement = document.createElement('li');
-    liElement.setAttribute('data-id', todo.id);
-    if(todo.done) liElement.classList.add('completed');
+    liElement.setAttribute('data-id', id);
+    if(done) liElement.classList.add('completed');
     liElement.innerHTML = html;
     return liElement;
 }
