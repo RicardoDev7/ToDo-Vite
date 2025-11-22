@@ -3,7 +3,8 @@ import html from './app.html?raw';
 import { renderTodos } from './use-cases/render-todos';
 
 const ElementIDs = {
-    ulListTodos: 'ulListTodos'
+    ulListTodos: 'ulListTodos',
+    newTodoInput: 'new-todo-input'
 }
 
 /**
@@ -23,4 +24,15 @@ export const App = (elementID) => {
         document.querySelector(elementID).append(app);
         displayTodos();
     })();
+
+    const newDescriptionInput = document.getElementById(ElementIDs.newTodoInput);
+
+    newDescriptionInput.addEventListener('keyup', (event) => {
+        if(event.key !== 'Enter') return;
+        let value = event.target.value;
+        if(value.trim().length === 0) return;
+        todoStore.addTodo(value);
+        displayTodos();
+        event.target.value = '';
+    });
 }
