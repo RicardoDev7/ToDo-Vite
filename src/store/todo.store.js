@@ -59,7 +59,8 @@ const deleteTodo = (todoID) => {
 }
 
 const deleteCompleted = () => {
-    state.todos = state.todos.filter(x => x.done);
+    debugger;
+    state.todos = state.todos.filter(x => !x.done);
     saveStateToLocalStorage();
 }
 
