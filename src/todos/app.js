@@ -5,7 +5,8 @@ import { renderTodos } from './use-cases/render-todos';
 const ElementIDs = {
     ulListTodos: 'ulListTodos',
     newTodoInput: 'new-todo-input',
-    btnClearCompleted: 'btnClearCompleted'
+    btnClearCompleted: 'btnClearCompleted',
+    filtersLI: '.filter'
 }
 
 /**
@@ -29,6 +30,7 @@ export const App = (elementID) => {
     const newDescriptionInput = document.getElementById(ElementIDs.newTodoInput);
     const todoListUL = document.getElementById(ElementIDs.ulListTodos);
     const btnClearCompleted = document.getElementById(ElementIDs.btnClearCompleted);
+    const liFilters = document.querySelectorAll(ElementIDs.filtersLI);
 
     newDescriptionInput.addEventListener('keyup', (event) => {
         if(event.key !== 'Enter') return;
@@ -50,8 +52,30 @@ export const App = (elementID) => {
         displayTodos();
     });
 
+    liFilters.forEach(element => {
+        element.addEventListener('click', (element) => {
+            liFilters.forEach(x => x.classList.remove('selected'));
+            element.target.classList.add('selected');
+            setFilterByLi(element.target.getAttribute('data-name'));
+        });
+    });
+
     const toogleTodo = (element) => todoStore.toogleTodo(element.getAttribute('data-id'));
     
     const deleteTodo = (element) => todoStore.deleteTodo(element.getAttribute('data-id'));
+
+    const setFilterByLi = (value) => {
+        switch (value) {
+            case 'All':
+                todoStore.setFilter(todoStore.Filters.All);
+                break;
+            case 'Pending':
+                todoStore.setFilter(todoStore.Filters.Pending);
+                break;
+            case 'Completed':
+                todoStore.setFilter(todoStore.Filters.Completed);
+                break;
+        }
+    }
     
 }

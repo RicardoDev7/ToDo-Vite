@@ -2,8 +2,8 @@ import { Todo } from "../todos/models/todo.model";
 
 const Filters = {
     All: 'all',
-    Completed: 'completed',
-    Pending: 'pending'
+    Pending: 'pending',
+    Completed: 'completed'
 }
 
 const state = {
@@ -64,6 +64,10 @@ const deleteCompleted = () => {
     saveStateToLocalStorage();
 }
 
+/**
+ * 
+ * @param {Filters} newFilter 
+ */
 const setFilter = (newFilter = Filters.All) => {
     state.filter = newFilter;
     saveStateToLocalStorage();
@@ -74,5 +78,5 @@ const getCurrentFilter = () => {
 }
 
 export default {
-    initStore, getTodos, addTodo, toogleTodo, deleteTodo, deleteCompleted, setFilter, getCurrentFilter
+    initStore, getTodos, addTodo, toogleTodo, deleteTodo, deleteCompleted, setFilter, getCurrentFilter, Filters
 }
