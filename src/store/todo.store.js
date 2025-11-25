@@ -1,16 +1,13 @@
 import { Todo } from "../todos/models/todo.model";
 
 const Filters = {
-    All: 'all',
-    Pending: 'pending',
-    Completed: 'completed'
+    All: 'All',
+    Pending: 'Pending',
+    Completed: 'Completed'
 }
 
 const state = {
-    todos: [
-        new Todo('Piedra del alma'),
-        new Todo('Piedra del infinito')
-    ],
+    todos: [],
     filter: Filters.All
 }
 
@@ -27,14 +24,14 @@ const loadStore = () => {
     state.todos = todos;
 }
 
-const saveStateToLocalStorage = () =>{
+const saveStateToLocalStorage = () => {
     localStorage.setItem('state', JSON.stringify(state));
 }
 
 const getTodos = (newFilter = Filters.All) => {
     switch(newFilter){
-        case Filters.Completed : state.todos.filter(x => x.done);
-        case Filters.Pending : state.todos.filter(x => !x.done);
+        case Filters.Completed : return state.todos.filter(x => x.done);
+        case Filters.Pending : return state.todos.filter(x => !x.done);
         default: return [...state.todos];
     }
 }
@@ -59,7 +56,6 @@ const deleteTodo = (todoID) => {
 }
 
 const deleteCompleted = () => {
-    debugger;
     state.todos = state.todos.filter(x => !x.done);
     saveStateToLocalStorage();
 }

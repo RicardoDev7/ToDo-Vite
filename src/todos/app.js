@@ -1,12 +1,14 @@
 import todoStore from '../store/todo.store';
 import html from './app.html?raw';
+import { renderPending } from './use-cases';
 import { renderTodos } from './use-cases/render-todos';
 
 const ElementIDs = {
     ulListTodos: 'ulListTodos',
     newTodoInput: 'new-todo-input',
     btnClearCompleted: 'btnClearCompleted',
-    filtersLI: '.filter'
+    filtersLI: '.filter',
+    pendingCount: 'pending-count'
 }
 
 /**
@@ -18,6 +20,11 @@ export const App = (elementID) => {
     const displayTodos = () => {
         const todos = todoStore.getTodos(todoStore.getCurrentFilter());
         renderTodos(ElementIDs.ulListTodos, todos);
+        updatePendingCount();
+    }
+
+    const updatePendingCount = () => {
+        renderPending(ElementIDs.pendingCount);
     }
 
     (() => {
@@ -57,6 +64,7 @@ export const App = (elementID) => {
             liFilters.forEach(x => x.classList.remove('selected'));
             element.target.classList.add('selected');
             setFilterByLi(element.target.getAttribute('data-name'));
+            displayTodos();
         });
     });
 
